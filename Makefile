@@ -366,7 +366,7 @@ ifeq ($(K8S_INSTALL),rke2)
 clean: | router-clean clean-systemd 
 	sudo /usr/local/bin/rke2-uninstall.sh || true
 	sudo rm -rf /usr/local/bin/kubectl
-	rm -rf $(M)
+	rm -rf $(M)	
 endif
 
 
