@@ -318,6 +318,7 @@ oai-ranue:
 	helm install ranue $(WORKSPACE)/oai-5g-ran/oai-nr-ue
 	kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=oai-nr-ue --timeout=3m 
 
+oai : node-prep
 ifeq ($(K8S_INSTALL),rke2)
 oai: |  oai-core oai-gnb oai-ranue
 endif
