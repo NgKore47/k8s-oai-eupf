@@ -17,3 +17,26 @@ make oai
 ```
 This will deploy end-to-end 5g core on kubernetes
 
+after deploying the core go inside the oai-traffic-server pod 
+```bash
+kubectl exec -it <oai-traffic-server's pod name> bash
+```
+and run these commands inside the po
+```bash
+ip route change default via 169.254.1.1 dev eth0
+sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -s 12.1.1.0/24 -o eth0 -j SNAT --to-source <eth0's ip address>
+```
+### Check internet connectivity 
+Go inside oai-nr-ue pod 
+```bash
+kubectl exec -it <oai-nr-ue's pod name> bash
+```
+change the default route to access dns server
+```bash
+ip route change default via 169.254.1.1 dev eth0
+```
+and after doing this the internet works
+```bash
+ping -I 12.1.1.100 google.com
+```
